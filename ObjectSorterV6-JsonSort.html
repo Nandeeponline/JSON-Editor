@@ -175,6 +175,15 @@
             try {
                 const textarea = document.getElementById('jsonTextarea');
                 let jsonObject = JSON.parse(textarea.value);
+                let sortedJsonObject = sortObj(jsonObject);
+                textarea.value = JSON.stringify(sortedJsonObject, null, 4);
+            } catch (e) {
+                console.log(e);
+                showModal('Unable To Sort');
+            }
+
+        }
+        function sortObj(jsonObject) {
                 let sortedJsonObject = {};
                 let bjkeys = Object.keys(jsonObject).sort((a, b) => { return a.localeCompare(b) });
                 bjkeys.forEach(el => {
@@ -183,13 +192,8 @@
                         sortedJsonObject[el] = sortObj(jsonObject[el]);
                     }
                 })
-                textarea.value = JSON.stringify(sortedJsonObject, null, 4);
 
-            } catch (e) {
-                showModal('Unable To Sort');
-            }
-
-            // return sortedJsonObject;
+            return sortedJsonObject;
 
         }
 
